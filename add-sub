@@ -1,0 +1,70 @@
+title karatsiolis
+
+data segment
+   num1 db 5
+   num2 db 3 
+   num1msg db "To num1 einai: ","$"
+   num2msg db 10,13,"To num2 einai: ","$"
+   submsg db 10,13,"To apotelesma afaireshs einai: ","$"
+   addmsg db 10,13,"To apotelesma prostheshs einai: ","$"
+data ends 
+
+code segment
+   start: mov AX,data
+          mov DS,AX
+          
+          ;kyriws programma
+          ;gia num1
+          LEA DX,num1msg
+          MOV AH,09
+          int 21h
+          
+          mov dl,35h
+          mov ah,02
+          int 21h           
+          
+          ;gia num2          
+          LEA DX,num2msg
+          MOV AH,09
+          int 21h
+          
+          mov dl,33h
+          mov ah,02
+          int 21h 
+          
+          ;GIA SUB
+          LEA DX,submsg
+          MOV AH,09
+          int 21h
+          
+          mov ah,num1
+          mov al,num2
+          sub ah,al
+          
+          ;gia ektypwsh
+          mov dl,ah
+          add dl,30h ;gia na ginei ascii 
+          mov ah,02
+          int 21h
+          
+          ;GIA ADD
+          LEA DX, addmsg
+          MOV AH,09
+          int 21h  
+          
+          mov ah,num1
+          mov al,num2
+          add ah,al
+          
+          ;gia ektypwsh
+          mov dl,ah
+          add dl,30h
+          mov ah,02
+          int 21h
+                     
+          ;template          
+          mov AH,4CH
+          int 21h
+          
+code ends
+end start
